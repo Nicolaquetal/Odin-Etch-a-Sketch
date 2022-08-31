@@ -1,8 +1,15 @@
 const container = document.querySelector('.container');
 const containersize = 500;
 const btnNbSquare = document.querySelector('#nbSquares');
+const colorBlack= document.querySelector('#colorBlack');
+const colorRainbow = document.querySelector('#colorRainbow');
+let colorSquares = "black";
+
+colorRainbow.addEventListener('click',()=>{colorSquares = "rainbow"});
+colorBlack.addEventListener('click', ()=>{colorSquares = "black"});
+
 const size = 50
-const sizesquare = containersize/size;
+let sizesquare = containersize/size;
 
 let divline=[]
 for(let j=0;j<size;j++){
@@ -12,30 +19,31 @@ for(let j=0;j<size;j++){
         div[i] = document.createElement('div');
         divline[j].appendChild(div[i]);
         
-        div[i].setAttribute ('style', `border: solid;border-width :1px ; width : ${sizesquare}px; height : ${sizesquare}px`); 
+        div[i].setAttribute ('style', `width : ${sizesquare}px; height : ${sizesquare}px`); //border: solid; border-width :1px ; 
         div[i].style.backgroundColor = "white";
         div[i].classList.add('square'); 
     }
     container.appendChild(divline[j]);
     divline[j].classList.add('line');
 }
-
-
 const squares = Array.from(document.querySelectorAll('.square'));
-
-btnNbSquare.addEventListener('click', makenewgrid);
 squares.forEach(square => square.addEventListener('mouseover',changeBGColor));
 
+btnNbSquare.addEventListener('click', makenewgrid);
 function makenewgrid(){
     let k =prompt("How many squares per side ? (Max 100)");
     if (typeof(parseInt(k)) !== 'number' || k<=0) { let k =prompt("Please, enter a (positive number) ? (Max 100)"); console.log(parseInt(k)) }
     else if (k>100) { k =100}
 
     while (container.firstChild) {
-        container.firstChild.remove()
+        container.firstChild.remove();
     }
-    const size = k
-    const sizesquare = containersize/size;
+    const size = k;
+    let sizesquare = containersize/size;
+    console.log( "k :"+k);
+    console.log( "size :"+size);
+    console.log( "containersize :"+containersize);
+    console.log( "sizesquare :"+sizesquare);
 
     
 
@@ -47,7 +55,7 @@ function makenewgrid(){
             div[i] = document.createElement('div');
             divline[j].appendChild(div[i]);
             
-            div[i].setAttribute ('style', `border: solid;border-width :1px ; width : ${sizesquare}px; height : ${sizesquare}px`); 
+            div[i].setAttribute ('style', `width : ${sizesquare}px; height : ${sizesquare}px`);// border: solid;border-width :1px ; 
             div[i].style.backgroundColor = "white";
             div[i].classList.add('square'); 
         }
@@ -59,10 +67,8 @@ function makenewgrid(){
 }
 
 function changeBGColor(e){
-    e.target.style.backgroundColor ="green";
-    //e.target.attributes["style"]
-    //e.target.backgrounColor = green;
-
+    colorSquares === "black" ?  e.target.style.backgroundColor = "black": e.target.style.backgroundColor = `rgb(${Math.floor(256*Math.random())},${Math.floor(256*Math.random())},${Math.floor(256*Math.random())})`;
+    
 }
 
 
